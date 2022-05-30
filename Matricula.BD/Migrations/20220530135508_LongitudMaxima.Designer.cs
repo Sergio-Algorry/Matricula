@@ -4,6 +4,7 @@ using Matricula.BD.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Matricula.BD.Migrations
 {
     [DbContext(typeof(dbcontext))]
-    partial class dbcontextModelSnapshot : ModelSnapshot
+    [Migration("20220530135508_LongitudMaxima")]
+    partial class LongitudMaxima
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -35,7 +37,7 @@ namespace Matricula.BD.Migrations
                         .HasMaxLength(2)
                         .HasColumnType("nvarchar(2)");
 
-                    b.Property<DateTime?>("FechaCreacion")
+                    b.Property<DateTime>("FechaCreacion")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("NomEspecialidad")
@@ -44,9 +46,6 @@ namespace Matricula.BD.Migrations
                         .HasColumnType("nvarchar(150)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex(new[] { "Codigo" }, "EspecialidadCodigo_UQ")
-                        .IsUnique();
 
                     b.ToTable("Especialidades");
                 });
@@ -64,7 +63,7 @@ namespace Matricula.BD.Migrations
                         .HasMaxLength(8)
                         .HasColumnType("nvarchar(8)");
 
-                    b.Property<DateTime?>("FechaCreacion")
+                    b.Property<DateTime>("FechaCreacion")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Nombre")
@@ -73,9 +72,6 @@ namespace Matricula.BD.Migrations
                         .HasColumnType("nvarchar(150)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex(new[] { "DNI" }, "MedicoDNI_UQ")
-                        .IsUnique();
 
                     b.ToTable("Medicos");
                 });

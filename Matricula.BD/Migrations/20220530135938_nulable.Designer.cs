@@ -4,6 +4,7 @@ using Matricula.BD.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Matricula.BD.Migrations
 {
     [DbContext(typeof(dbcontext))]
-    partial class dbcontextModelSnapshot : ModelSnapshot
+    [Migration("20220530135938_nulable")]
+    partial class nulable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -45,9 +47,6 @@ namespace Matricula.BD.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex(new[] { "Codigo" }, "EspecialidadCodigo_UQ")
-                        .IsUnique();
-
                     b.ToTable("Especialidades");
                 });
 
@@ -73,9 +72,6 @@ namespace Matricula.BD.Migrations
                         .HasColumnType("nvarchar(150)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex(new[] { "DNI" }, "MedicoDNI_UQ")
-                        .IsUnique();
 
                     b.ToTable("Medicos");
                 });

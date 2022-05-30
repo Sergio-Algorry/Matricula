@@ -15,6 +15,7 @@ namespace Matricula.BD.Data
     {
 
         public DbSet<Medico> Medicos { get; set; }
+        public DbSet<Especialidad> Especialidades { get; set; }
 
         public dbcontext(DbContextOptions options) : base(options)
         {

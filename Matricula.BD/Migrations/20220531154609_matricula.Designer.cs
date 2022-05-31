@@ -4,6 +4,7 @@ using Matricula.BD.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Matricula.BD.Migrations
 {
     [DbContext(typeof(dbcontext))]
-    partial class dbcontextModelSnapshot : ModelSnapshot
+    [Migration("20220531154609_matricula")]
+    partial class matricula
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -69,18 +71,15 @@ namespace Matricula.BD.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("NumMatricula")
-                        .IsRequired()
-                        .HasMaxLength(10)
-                        .HasColumnType("nvarchar(10)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("EspecialidadId");
 
-                    b.HasIndex(new[] { "MedicoId", "EspecialidadId" }, "MatriculaMedicoIdEspecialidadId_UQ")
-                        .IsUnique();
+                    b.HasIndex("MedicoId");
 
-                    b.ToTable("Matriculas");
+                    b.ToTable("Matricula");
                 });
 
             modelBuilder.Entity("Matricula.BD.Data.Entidades.Medico", b =>

@@ -13,9 +13,9 @@ namespace Matricula.BD.Data
     /// </summary>
     public class dbcontext : DbContext
     {
-
         public DbSet<Medico> Medicos { get; set; }
         public DbSet<Especialidad> Especialidades { get; set; }
+        public DbSet<Entidades.Matricula> Matriculas { get; set; }
 
         public dbcontext(DbContextOptions options) : base(options)
         {

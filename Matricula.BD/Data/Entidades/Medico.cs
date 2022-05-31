@@ -17,5 +17,7 @@ namespace Matricula.BD.Data.Entidades
         [Required]
         [MaxLength(150, ErrorMessage = "El Nombre de la persona no debe superar los {1} caracteres")]
         public string Nombre { get; set; }
+
+        public List<Matricula> Matriculas { get; set; }
     }
 }

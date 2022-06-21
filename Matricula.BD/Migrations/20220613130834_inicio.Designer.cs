@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Matricula.BD.Migrations
 {
     [DbContext(typeof(dbcontext))]
-    [Migration("20220530135938_nulable")]
-    partial class nulable
+    [Migration("20220613130834_inicio")]
+    partial class inicio
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -47,7 +47,42 @@ namespace Matricula.BD.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex(new[] { "Codigo" }, "EspecialidadCodigo_UQ")
+                        .IsUnique();
+
                     b.ToTable("Especialidades");
+                });
+
+            modelBuilder.Entity("Matricula.BD.Data.Entidades.Matricula", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("EspecialidadId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("FechaCreacion")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("MedicoId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("NumMatricula")
+                        .IsRequired()
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EspecialidadId");
+
+                    b.HasIndex(new[] { "MedicoId", "EspecialidadId" }, "MatriculaMedicoIdEspecialidadId_UQ")
+                        .IsUnique();
+
+                    b.ToTable("Matriculas");
                 });
 
             modelBuilder.Entity("Matricula.BD.Data.Entidades.Medico", b =>
@@ -73,7 +108,39 @@ namespace Matricula.BD.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex(new[] { "DNI" }, "MedicoDNI_UQ")
+                        .IsUnique();
+
                     b.ToTable("Medicos");
+                });
+
+            modelBuilder.Entity("Matricula.BD.Data.Entidades.Matricula", b =>
+                {
+                    b.HasOne("Matricula.BD.Data.Entidades.Especialidad", "Especialidad")
+                        .WithMany("Matriculas")
+                        .HasForeignKey("EspecialidadId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Matricula.BD.Data.Entidades.Medico", "Medico")
+                        .WithMany("Matriculas")
+                        .HasForeignKey("MedicoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Especialidad");
+
+                    b.Navigation("Medico");
+                });
+
+            modelBuilder.Entity("Matricula.BD.Data.Entidades.Especialidad", b =>
+                {
+                    b.Navigation("Matriculas");
+                });
+
+            modelBuilder.Entity("Matricula.BD.Data.Entidades.Medico", b =>
+                {
+                    b.Navigation("Matriculas");
                 });
 #pragma warning restore 612, 618
         }

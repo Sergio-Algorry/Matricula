@@ -22,17 +22,49 @@ namespace Matricula.Server.Controllers
             return await context.Especialidades.ToListAsync();
         }
 
-
         [HttpGet("{id:int}")]
         public async Task<ActionResult<Especialidad>> Get(int id)
         {
-            var especialidad = await context.Especialidades.Where(
-                                     e => e.Id == id).FirstOrDefaultAsync();
+            var especialidad = await context.Especialidades
+                                         .Where(e => e.Id == id)
+                                         .Include(m => m.Matriculas)
+                                         .FirstOrDefaultAsync();
             if (especialidad == null)
             {
                 return NotFound($"No existe la especialidad de Id={id}");
             }
             return especialidad;
         }
+
+        [HttpPost]
+        public async Task<ActionResult<int>> Post(Especialidad especialidad)
+        {
+            try
+            {
+                context.Especialidades.Add(especialidad);
+                await context.SaveChangesAsync();
+                return especialidad.Id;
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+
+
+        //[HttpGet("EspecialidadPorCodigo{codigo:string}")]
+        //public async Task<ActionResult<Especialidad>> EspecialidadPorCodigo(string codigo)
+        //{
+        //    var especialidad = await context.Especialidades
+        //                             .Where(e => e.Codigo == codigo)
+        //                             .Include(m => m.Matriculas)
+        //                             .FirstOrDefaultAsync();
+        //    if (especialidad == null)
+        //    {
+        //        return NotFound($"No existe la especialidad de código={codigo}");
+        //    }
+        //    return especialidad;
+        //}
+
     }
 }

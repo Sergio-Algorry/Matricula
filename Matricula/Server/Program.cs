@@ -2,10 +2,22 @@ using Matricula.BD.Data;
 using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+//.NET3.1
+//Instala la librería: Microsoft.AspNetCore.Mvc.NewtonsoftJson
+//services.AddControllers().AddNewtonsoftJson(x =>
+//    x.SerializerSettings.ReferenceLoopHandling =
+//    Newtonsoft.Json.ReferenceLoopHandling.Ignore);
+//.NET5
+//services.AddControllersWithViews().AddJsonOptions(x =>
+//    x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve);
+//.NET6
+builder.Services.AddControllersWithViews().AddJsonOptions(
+    x => x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();

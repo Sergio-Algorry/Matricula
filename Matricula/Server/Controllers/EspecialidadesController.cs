@@ -52,19 +52,19 @@ namespace Matricula.Server.Controllers
         }
 
 
-        //[HttpGet("EspecialidadPorCodigo{codigo:string}")]
-        //public async Task<ActionResult<Especialidad>> EspecialidadPorCodigo(string codigo)
-        //{
-        //    var especialidad = await context.Especialidades
-        //                             .Where(e => e.Codigo == codigo)
-        //                             .Include(m => m.Matriculas)
-        //                             .FirstOrDefaultAsync();
-        //    if (especialidad == null)
-        //    {
-        //        return NotFound($"No existe la especialidad de código={codigo}");
-        //    }
-        //    return especialidad;
-        //}
+        [HttpGet("EspecialidadPorCodigo/{codigo}")]
+        public async Task<ActionResult<Especialidad>> EspecialidadPorCodigo(string codigo)
+        {
+            var especialidad = await context.Especialidades
+                                     .Where(e => e.Codigo == codigo)
+                                     .Include(m => m.Matriculas)
+                                     .FirstOrDefaultAsync();
+            if (especialidad == null)
+            {
+                return NotFound($"No existe la especialidad de código={codigo}");
+            }
+            return especialidad;
+        }
 
     }
 }

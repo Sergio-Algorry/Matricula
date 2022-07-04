@@ -36,6 +36,20 @@ namespace Matricula.Server.Controllers
             return especialidad;
         }
 
+        [HttpGet("EspecialidadPorCodigo/{codigo}")]
+        public async Task<ActionResult<Especialidad>> EspecialidadPorCodigo(string codigo)
+        {
+            var especialidad = await context.Especialidades
+                                     .Where(e => e.Codigo == codigo)
+                                     .Include(m => m.Matriculas)
+                                     .FirstOrDefaultAsync();
+            if (especialidad == null)
+            {
+                return NotFound($"No existe la especialidad de código={codigo}");
+            }
+            return especialidad;
+        }
+
         [HttpPost]
         public async Task<ActionResult<int>> Post(Especialidad especialidad)
         {
@@ -51,20 +65,57 @@ namespace Matricula.Server.Controllers
             }
         }
 
-
-        [HttpGet("EspecialidadPorCodigo/{codigo}")]
-        public async Task<ActionResult<Especialidad>> EspecialidadPorCodigo(string codigo)
+        [HttpPut("{id:int}")]
+        public ActionResult Put(int id, [FromBody] Especialidad especialidad)
         {
-            var especialidad = await context.Especialidades
-                                     .Where(e => e.Codigo == codigo)
-                                     .Include(m => m.Matriculas)
-                                     .FirstOrDefaultAsync();
-            if (especialidad == null)
+            if(id != especialidad.Id)
             {
-                return NotFound($"No existe la especialidad de código={codigo}");
+                return BadRequest("Datos incorrectos");
             }
-            return especialidad;
+
+            var pepe = context.Especialidades.Where(e => e.Id == id).FirstOrDefault();
+
+            if(pepe == null)
+            {
+                return NotFound("No existe la especialidad a modificar");
+            }
+
+            pepe.Codigo = especialidad.Codigo;
+            pepe.NomEspecialidad = especialidad.NomEspecialidad;
+
+            try
+            {
+                //throw(new Exception("Cualquier Verdura"));
+                context.Especialidades.Update(pepe);
+                context.SaveChanges();
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                return BadRequest($"Los datos no han sido actualizados por: {e.Message}");
+            }
         }
 
+        [HttpDelete("{id:int}")]
+        public ActionResult Delete(int id)
+        {
+            var pepe = context.Especialidades.Where(x=>x.Id==id).FirstOrDefault();
+
+            if(pepe==null)
+            {
+                return NotFound($"El registro {id} no fue encontrado");
+            }
+
+            try
+            {
+                context.Especialidades.Remove(pepe);
+                context.SaveChanges();
+                return Ok($"El registro de {pepe.NomEspecialidad} ha sido borrado.");
+            }
+            catch (Exception e)
+            {
+                return BadRequest($"Los datos no pudieron eliminarse por: {e.Message}");
+            }
+        }
     }
 }

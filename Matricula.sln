@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.1.32421.90
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Matricula.Server", "Matricula\Server\Matricula.Server.csproj", "{D5E7913D-C5BF-446E-A1B7-CB7CB2429993}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Matricula.Server", "Matricula\Server\Matricula.Server.csproj", "{D5E7913D-C5BF-446E-A1B7-CB7CB2429993}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Matricula.Client", "Matricula\Client\Matricula.Client.csproj", "{E0C5E966-EFF3-409D-856D-F0D50B879395}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Matricula.Client", "Matricula\Client\Matricula.Client.csproj", "{E0C5E966-EFF3-409D-856D-F0D50B879395}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Matricula.Shared", "Matricula\Shared\Matricula.Shared.csproj", "{CF899256-3746-4D07-A31D-DB4EB3EE4F6C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Matricula.Shared", "Matricula\Shared\Matricula.Shared.csproj", "{CF899256-3746-4D07-A31D-DB4EB3EE4F6C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Matricula.BD", "Matricula.BD\Matricula.BD.csproj", "{4915903E-FAAE-4820-A5FF-3301A1C3CCA8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Matricula.BD", "Matricula.BD\Matricula.BD.csproj", "{4915903E-FAAE-4820-A5FF-3301A1C3CCA8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

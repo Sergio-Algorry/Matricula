@@ -19,7 +19,8 @@ namespace Matricula.Server.Controllers
         [HttpGet]
         public async Task<ActionResult<List<Especialidad>>> Get()
         {
-            return await context.Especialidades.ToListAsync();
+            var resp = await context.Especialidades.ToListAsync();
+            return resp;
         }
 
         [HttpGet("{id:int}")]

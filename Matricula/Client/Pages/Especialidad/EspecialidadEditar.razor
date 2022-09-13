@@ -1,0 +1,19 @@
+﻿@page "/Especialidades/Editar"
+@inject IHttpService http
+@inject NavigationManager navigationManager
+
+<h3>Nueva especialidad</h3>
+
+<FormEspecialidad especialidad="especialidad" onCancel="Cancelar" onValidSubmit="Grabar" />
+
+@code {
+    private Especialidad especialidad = new Especialidad();
+
+    private void Grabar()
+    { 
+    }
+
+    private void Cancelar()
+    {
+    }
+}

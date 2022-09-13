@@ -11,7 +11,7 @@ namespace Matricula.BD.Data.Entidades
     [Index(nameof(Codigo), Name= "EspecialidadCodigo_UQ", IsUnique =true)]
     public class Especialidad : EntityBase
     {
-        [Required]
+        [Required(ErrorMessage = "El código es obligatorio")]
         [MaxLength(2, ErrorMessage = "El Código de la especialidad no debe superar los {1} caracteres")]
         public string Codigo { get; set; }
         [Required]

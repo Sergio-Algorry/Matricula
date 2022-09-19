@@ -1,14 +1,33 @@
-﻿@page "/Especialidades/Editar"
+﻿@page "/Especialidades/Editar/{especialidadId:int}"
 @inject IHttpService http
 @inject NavigationManager navigationManager
 
-<h3>Nueva especialidad</h3>
+<h3>Editar especialidad</h3>
 
 <FormEspecialidad especialidad="especialidad" onCancel="Cancelar" onValidSubmit="Grabar" />
 
 @code 
 {
     private Especialidad especialidad  = new Especialidad();
+    [Parameter] public int especialidadId { get; set; }
+
+    protected async override Task OnInitializedAsync()
+    {
+        await Mostrar();
+    }
+
+    private async Task Mostrar()
+    {
+        var respuesta = await http.Get<Especialidad>($"api/Especialidades/{especialidadId}");
+        if(respuesta.Error)
+        {
+            var body = respuesta.HttpResponseMessage;
+        }
+        else
+        {
+            especialidad = respuesta.Respuesta;
+        }
+    }
 
     private void Grabar()
     { 
@@ -16,5 +35,6 @@
 
     private void Cancelar()
     {
+        navigationManager.NavigateTo("/Especialidades");
     }
 }

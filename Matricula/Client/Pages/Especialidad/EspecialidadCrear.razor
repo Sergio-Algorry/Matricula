@@ -9,11 +9,18 @@
 @code {
     private Especialidad especialidad = new Especialidad();
 
-    private void Grabar()
+    private async void Grabar()
     {
+        var httpRespuesta = await http.Post<Especialidad>("api/Especialidades", especialidad);
+        if (httpRespuesta.Error)
+        {
+            var body = httpRespuesta.HttpResponseMessage;
+        }
+        navigationManager.NavigateTo("/Especialidades");
     }
 
     private void Cancelar()
     {
+        navigationManager.NavigateTo("/Especialidades");
     }
 }

@@ -3,6 +3,8 @@
 
 <h3>Lista de Especialidades</h3>
 
+<a class="btn btn-primary" href="Especialidades/Crear">Nueva especialidad</a>
+
 <table>
     <tr>
         <th>Código</th>
@@ -24,6 +26,12 @@
             <tr>
                 <td>@item.Codigo</td>
                 <td>@item.NomEspecialidad</td>
+                <td>
+                    <a class="btn btn-primary"
+                       href="Especialidades/Editar/@item.Id">
+                        Editar
+                    </a>
+                </td>
             </tr>
         }
     }

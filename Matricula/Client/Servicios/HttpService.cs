@@ -1,4 +1,5 @@
-﻿using System.Text.Json;
+﻿using System.Text;
+using System.Text.Json;
 
 namespace Matricula.Client.Servicios
 {
@@ -23,6 +24,23 @@ namespace Matricula.Client.Servicios
             {
                 return new HttpRespuesta<T>(default, true, response);
             }
+
+        }
+
+        public async Task<HttpRespuesta<object>> Post<T>(string url, T enviar)
+        {
+            try
+            {
+                var enviarJson = JsonSerializer.Serialize(enviar);
+                var enviarContent = new StringContent(enviarJson,
+                                                      Encoding.UTF8,
+                                                      "application/json");
+                var respuesta = await http.PostAsync(url, enviarContent);
+                return new HttpRespuesta<object>(null,
+                                                 !respuesta.IsSuccessStatusCode,
+                                                 respuesta);
+            }
+            catch (Exception e) { throw; }
 
         }
 

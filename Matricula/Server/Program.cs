@@ -6,6 +6,13 @@ using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
+var conn = builder.Configuration.GetConnectionString("con");
+builder.Services.AddDbContext<dbcontext>(opciones => opciones.UseSqlServer(conn));
+builder.Services.AddSwaggerGen(c =>
+    {
+        c.SwaggerDoc("v1", new OpenApiInfo { Title = "Matricula", Version = "v1" });
+    });
+
 // Add services to the container.
 //.NET3.1
 //Instala la librería: Microsoft.AspNetCore.Mvc.NewtonsoftJson
@@ -16,25 +23,19 @@ var builder = WebApplication.CreateBuilder(args);
 //services.AddControllersWithViews().AddJsonOptions(x =>
 //    x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve);
 //.NET6
-builder.Services.AddControllersWithViews().AddJsonOptions(
-    x => x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
 
-builder.Services.AddControllersWithViews();
+builder.Services.AddControllersWithViews()
+                .AddJsonOptions(x => x.JsonSerializerOptions
+                                      .ReferenceHandler = ReferenceHandler
+                                      .IgnoreCycles);
+
 builder.Services.AddRazorPages();
-
-var conn = builder.Configuration.GetConnectionString("con");
-builder.Services.AddDbContext<dbcontext>(opciones => opciones.UseSqlServer(conn));
-builder.Services.AddSwaggerGen(c =>
-{
-    c.SwaggerDoc("v1", new OpenApiInfo { Title = "Matricula", Version = "v1" });
-});
 
 var app = builder.Build();
 
 app.UseSwagger();
 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json",
-    "Matricula v1"));
-
+                                        "Matricula v1"));
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

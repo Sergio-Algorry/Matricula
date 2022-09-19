@@ -1,6 +1,5 @@
 ﻿@page "/Especialidades"
 @inject IHttpService http
-@using Matricula.BD.Data.Entidades
 
 <h3>Lista de Especialidades</h3>
 
@@ -31,18 +30,18 @@
 
 
 </table>
-@code {
-    List<Especialidad> especialidades;
+@code { 
+    List<Matricula.BD.Data.Entidades.Especialidad> especialidades;
 
     protected override async Task OnInitializedAsync()
     {
-        base.OnInitializedAsync();
+        await base.OnInitializedAsync();
         await Leer();
     }
 
     private async Task Leer()
     {
-        var respuesta = await http.Get<List<Especialidad>>("api/Especialidades");
+        var respuesta = await http.Get<List<Matricula.BD.Data.Entidades.Especialidad>>("api/Especialidades");
         if(!respuesta.Error)
         {
             especialidades = respuesta.Respuesta;

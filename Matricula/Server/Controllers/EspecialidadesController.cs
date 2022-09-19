@@ -28,7 +28,7 @@ namespace Matricula.Server.Controllers
         {
             var especialidad = await context.Especialidades
                                          .Where(e => e.Id == id)
-                                         .Include(m => m.Matriculas)
+                                         //.Include(m => m.Matriculas)
                                          .FirstOrDefaultAsync();
             if (especialidad == null)
             {
@@ -42,7 +42,6 @@ namespace Matricula.Server.Controllers
         {
             var especialidad = await context.Especialidades
                                      .Where(e => e.Codigo == codigo)
-                                     .Include(m => m.Matriculas)
                                      .FirstOrDefaultAsync();
             if (especialidad == null)
             {

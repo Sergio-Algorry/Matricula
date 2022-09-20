@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System.Globalization;
+using System.Text;
 using System.Text.Json;
 
 namespace Matricula.Client.Servicios
@@ -42,6 +43,22 @@ namespace Matricula.Client.Servicios
             }
             catch (Exception e) { throw; }
 
+        }
+
+        public async Task<HttpRespuesta<object>> Put<T>(string url, T enviar)
+        {
+            try
+            {
+                var enviarJson = JsonSerializer.Serialize(enviar);
+                var enviarContent = new StringContent(enviarJson,
+                                                      Encoding.UTF8,
+                                                      "application/json");
+                var respuesta = await http.PutAsync(url, enviarContent);
+                return new HttpRespuesta<object>(null,
+                                                 !respuesta.IsSuccessStatusCode,
+                                                 respuesta);
+            }
+            catch (Exception e) { throw; }
         }
 
         private async Task<T> DeserializarRepuesta<T>(HttpResponseMessage response)

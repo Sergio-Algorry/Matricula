@@ -29,8 +29,15 @@
         }
     }
 
-    private void Grabar()
-    { 
+    private async void Grabar()
+    {
+        var respuesta = await http.Put<Especialidad>($"api/Especialidades/{especialidadId}",
+                                                     especialidad);
+        if (respuesta.Error)
+        {
+            var body = respuesta.HttpResponseMessage;
+        }
+        navigationManager.NavigateTo("/Especialidades");
     }
 
     private void Cancelar()

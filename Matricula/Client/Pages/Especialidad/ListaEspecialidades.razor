@@ -32,12 +32,37 @@
                         Editar
                     </a>
                 </td>
+                <td>
+                    <button class="btn btn-warning"
+                            @onclick="()=>Eliminar(item)">
+                        Borrar
+                    </button>
+                </td>
             </tr>
         }
     }
 </table>
-@code { 
+
+<Confirmacion @ref="confirmacion"
+              verCancelar="true"
+              verOk="true"
+              textOk="Ok"
+              Titulo="Borrar especialidad"
+              onCancel="Cancelar"
+              onConfirm="Borrar">
+              <div>
+                  Está por borrar la especialidad @EspecialidadBorrar.NomEspecialidad
+                  <br />
+                  ¿Está seguro que desea continuar?
+              </div>
+</Confirmacion>
+
+
+@code {
     List<Matricula.BD.Data.Entidades.Especialidad> especialidades;
+    Confirmacion confirmacion;
+    Especialidad EspecialidadBorrar;
+
 
     protected override async Task OnInitializedAsync()
     {
@@ -52,5 +77,28 @@
         {
             especialidades = respuesta.Respuesta;
         }
+    }
+
+    private void Eliminar(Especialidad especialidadBorrar)
+    {
+        EspecialidadBorrar = especialidadBorrar;
+        confirmacion.Ver();
+    }
+
+    private void Cancelar()
+    {
+        confirmacion.Ocultar();
+        EspecialidadBorrar = null;
+    }
+
+    private async Task Borrar()
+    {
+        var respuesta = await http.Delete($"api/Especialidades/{EspecialidadBorrar.Id}");
+        if(respuesta.Error)
+        {
+            var body = "Error";
+        }
+        Cancelar();
+        await Leer();
     }
 }

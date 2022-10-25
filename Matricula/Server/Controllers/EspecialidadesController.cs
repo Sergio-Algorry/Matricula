@@ -2,7 +2,7 @@
 using Matricula.BD.Data.Entidades;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-
+using Matricula.Shared;
 namespace Matricula.Server.Controllers
 {
     [ApiController]
@@ -58,6 +58,34 @@ namespace Matricula.Server.Controllers
                 context.Especialidades.Add(especialidad);
                 await context.SaveChangesAsync();
                 return especialidad.Id;
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+
+        [HttpPost("MedicoEspecialidad")]
+        public async Task<ActionResult<int>> MedicoEspecialidad(MedicoEspecialidadDTO medicoEspecialidadDTO)
+        {
+            try
+            {
+                Especialidad especialidad = new()
+                {
+                    Codigo = medicoEspecialidadDTO.Codigo,
+                    NomEspecialidad = medicoEspecialidadDTO.NomEspecialidad
+                };
+                context.Especialidades.Add(especialidad);
+
+                Medico medico = new()
+                {
+                    DNI = medicoEspecialidadDTO.DNI,
+                    Nombre = medicoEspecialidadDTO.Nombre
+                };
+                context.Medicos.Add(medico);
+
+                await context.SaveChangesAsync();
+                return Ok();
             }
             catch (Exception e)
             {

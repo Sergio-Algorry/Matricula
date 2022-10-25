@@ -1,0 +1,28 @@
+﻿@page "/MedicoEspecialidad"
+@inject IHttpService http
+@inject NavigationManager navigationManager
+<h3>Medico Especialidad</h3>
+<FormMedicoEspecialidad medicoEspecialidad="medicoEspecialidad" 
+                        onCancel="Cancelar" 
+                        onValidSubmit="Grabar" />
+
+@code {
+    public MedicoEspecialidadDTO medicoEspecialidad { get; set; } = new();
+
+    private async void Grabar()
+    {
+        var httpRespuesta = await http.Post<MedicoEspecialidadDTO>(
+                                                          "api/Especialidades/MedicoEspecialidad",
+                                                          medicoEspecialidad);
+        if (httpRespuesta.Error)
+        {
+            var body = httpRespuesta.HttpResponseMessage;
+        }
+        navigationManager.NavigateTo("/");
+    }
+
+    private void Cancelar()
+    {
+        navigationManager.NavigateTo("/");
+    }
+}

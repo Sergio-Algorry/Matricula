@@ -1,0 +1,41 @@
+﻿<EditForm Model="medicoEspecialidad" OnValidSubmit="onValidSubmit">
+    <DataAnnotationsValidator />
+    <div class="form-group">
+        <label>Código</label>
+        <div>
+            <InputText class="form-control" @bind-Value="@medicoEspecialidad.Codigo" />
+            <ValidationMessage For="@(() => medicoEspecialidad.Codigo)" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label>Nombre de la especialidad</label>
+        <div>
+            <InputText class="form-control" @bind-Value="@medicoEspecialidad.NomEspecialidad" />
+            <ValidationMessage For="@(() => medicoEspecialidad.NomEspecialidad)" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label>DNI</label>
+        <div>
+            <InputText class="form-control" @bind-Value="@medicoEspecialidad.DNI" />
+            <ValidationMessage For="@(() => medicoEspecialidad.DNI)" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label>Nombre del Médico</label>
+        <div>
+            <InputText class="form-control" @bind-Value="@medicoEspecialidad.Nombre" />
+            <ValidationMessage For="@(() => medicoEspecialidad.Nombre)" />
+        </div>
+    </div>
+    <br />
+    <button class="btn btn-primary" type="submit">Aceptar</button>
+    <button class="btn btn-secondary" @onclick="onCancel">Cancelar</button>
+</EditForm>
+
+
+@code {
+    [Parameter] public MedicoEspecialidadDTO medicoEspecialidad { get; set; }
+    [Parameter] public EventCallback onValidSubmit { get; set; }
+    [Parameter] public EventCallback onCancel { get; set; }
+}
